@@ -5,7 +5,7 @@ import argparse  # we use this module for option parsing. See main for details.
 import sys
 from typing import TextIO
 from bed import (
-    parse_bed_line, print_line
+    parse_bed, print_line
 )
 
 
@@ -28,7 +28,7 @@ def main() -> None:
     args = argparser.parse_args()
 
     for line in args.infile:
-        print_line(parse_bed_line(line), args.outfile)
+        print_line(parse_bed(line), args.outfile)
 
 
 if __name__ == '__main__':

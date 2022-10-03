@@ -16,10 +16,10 @@ BedLine = NamedTuple("BedLine", [
 ])
 
 
-def parse_bed_line(line: str) -> BedLine:
+def parse_bed(line: str) -> BedLine:
     """Parse a single line from a BED file (with four columns).
 
-    >>> parse_bed_line('chr1   20_100  20_101  foo')
+    >>> parse_bed('chr1   20_100  20_101  foo')
     BedLine(chrom='chr1', chrom_start=20100, chrom_end=20101, name='foo')
 
     We assert that the interval the line specifies is a singleton nucleotide.
