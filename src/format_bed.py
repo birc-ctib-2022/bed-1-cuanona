@@ -26,7 +26,7 @@ def main() -> None:
 
     # Parse options and put them in the table args
     args = argparser.parse_args()
-
+    # Print formatted lines
     for line in args.infile:
         print_line(parse_bed(line), args.outfile)
 

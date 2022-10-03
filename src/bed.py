@@ -30,7 +30,7 @@ def parse_bed(line: str) -> BedLine:
     bed_line = BedLine(chrom, int(start), int(end), name)
     return bed_line
 
-
+# TO-DO how to test it
 def print_line(line: BedLine, f: TextIO) -> None:
     """Prints line to the stream f as a BED line."""
     print(line.chrom, line.chrom_start,

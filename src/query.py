@@ -40,13 +40,34 @@ def parse_query(line: str) -> QueryLine:
 
 
 def is_value_in_range(x: int, interval: tuple[int, int]):
+    """Check if value is in range (i.e. lower_bound <= x <= upper bound).
+
+    >>> is_value_in_range(5, (4, 6))
+    True
+    >>> is_value_in_range(5, (4, 5))
+    True
+
+    """
     return x > interval[0] and x <= interval[1]
 
 def is_overlapping(x: tuple[int, int], y: tuple[int, int]) -> Boolean:
+    """Check if 2 intervals overlap.
+
+    >>> is_overlapping((1, 10), (4, 15))
+    True
+    >>> is_overlapping((15, 17), (4, 5))
+    False
+
+    """
     return is_value_in_range(x[1], y) or is_value_in_range(y[1], x)
 
 
 def is_query_overlapping_with_bed(query: QueryLine, bed: BedLine) -> Boolean:
+    """Check if a a QueryLine overlaps with a BedLine
+    >>> is_query_overlapping_with_bed( QueryLine(chrom='chr1', chrom_start=1, chrom_end=10), BedLine(chrom='chr1', chrom_start=5, chrom_end=15, name='foo'))
+    True
+
+    """
     return is_overlapping(
         (query.chrom_start, query.chrom_end), (bed.chrom_start, bed.chrom_end)
     )
