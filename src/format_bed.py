@@ -27,9 +27,8 @@ def main() -> None:
     # Parse options and put them in the table args
     args = argparser.parse_args()
 
-    # With all the options handled, we just need to do the real work
-    # FIXME: put your code here
-
+    for line in args.infile:
+        print_line(parse_line(line), args.outfile)
 
 if __name__ == '__main__':
     main()
