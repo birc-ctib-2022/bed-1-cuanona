@@ -4,9 +4,9 @@ import argparse  # we use this module for option parsing. See main for details.
 
 import sys
 from bed import (
-    parse_line, print_line
+    parse_bed_line, print_line
 )
-from query import Table
+from query import Table, is_overlapping, is_query_overlapping_with_bed, parse_query
 
 
 def main() -> None:
@@ -26,9 +26,16 @@ def main() -> None:
     # Parse options and put them in the table args
     args = argparser.parse_args()
 
-    # With all the options handled, we just need to do the real work
-    # FIXME: put your code here
-
+    for query_line in args.query:
+        query = parse_query(query_line)
+        for bed_line in args.bed:
+            if query.chrom != bed.chrom:
+                pass
+            else:
+                bed = parse_bed_line(bed_line)
+                if is_query_overlapping_with_bed(query, bed):
+                    print_line(bed, args.outfile)
+    
 
 if __name__ == '__main__':
     main()
