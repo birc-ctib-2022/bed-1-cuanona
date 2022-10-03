@@ -29,13 +29,13 @@ def main() -> None:
     for query_line in args.query:
         query = parse_query(query_line)
         for bed_line in args.bed:
+            bed = parse_bed_line(bed_line)
             if query.chrom != bed.chrom:
                 pass
             else:
-                bed = parse_bed_line(bed_line)
                 if is_query_overlapping_with_bed(query, bed):
                     print_line(bed, args.outfile)
-    
+
 
 if __name__ == '__main__':
     main()
