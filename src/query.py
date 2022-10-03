@@ -15,9 +15,32 @@ for a given chromosome, you can use the get_chrom() method:
 [BedLine(chrom='chr1', chrom_start=0, chrom_end=1, name='foo'), BedLine(chrom='chr1', chrom_start=10, chrom_end=11, name='baz')]
 """
 
+from typing import NamedTuple
+from xmlrpc.client import Boolean
 from bed import BedLine
 from collections import defaultdict
 
+QueryLine = NamedTuple("QueryLine", [
+    ('chrom', str),
+    ('chrom_start', int),
+    ('chrom_end', int)
+])
+
+
+def parse_query(line: str) -> QueryLine:
+    """Parse a single line query (with three columns).
+
+    >>> parse_query('chr1   1  10')
+    QueryLine(chrom='chr1', chrom_start=1, chrom_end=10)
+
+    """
+    chrom, start, end = line.split()  # split on any white-space
+    query_line = QueryLine(chrom, int(start), int(end))
+    return query_line
+
+
+def is_overlapping(x: tuple[int, int], y: tuple[int, int]) -> Boolean:
+    return x[0] <= y[0] or x[1] >= y[1]
 
 class Table:
     """Table containing bed-lines."""
