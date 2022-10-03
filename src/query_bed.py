@@ -5,16 +5,14 @@ import argparse  # we use this module for option parsing. See main for details.
 import sys
 from typing import TextIO
 from bed import (
-    parse_bed, print_line
+    BedLine, parse_bed, print_line
 )
-from query import QueryLine, Table, is_overlapping, is_query_overlapping_with_bed, parse_query
+from query import QueryLine, Table, is_query_overlapping_with_bed, parse_query
 
-
-def print_query_overlap(table:Table, output_file: TextIO, query:QueryLine):
+def find_query_overlaps(table: Table, query: QueryLine) -> BedLine:
     for bed in table.get_chrom(query.chrom):
         if is_query_overlapping_with_bed(query, bed):
-            print_line(bed, output_file)
-
+            yield bed
 
 def read_bed_file_into_table(bed_file):
     table = Table()
@@ -45,7 +43,8 @@ def main() -> None:
     # Find overlaps
     for query_line in args.query:
         query = parse_query(query_line)
-        print_query_overlap(table, args.outfile, query)
+        for match in find_query_overlaps(table, query):
+            print_line(match, args.outfile)
 
 if __name__ == '__main__':
     main()
