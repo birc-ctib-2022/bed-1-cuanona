@@ -39,14 +39,18 @@ def parse_query(line: str) -> QueryLine:
     return query_line
 
 
+def is_value_in_range(x: int, interval: tuple[int, int]):
+    return x > interval[0] and x <= interval[1]
+
 def is_overlapping(x: tuple[int, int], y: tuple[int, int]) -> Boolean:
-    return x[0] <= y[0] or x[1] >= y[1]
+    return is_value_in_range(x[1], y) or is_value_in_range(y[1], x)
 
 
 def is_query_overlapping_with_bed(query: QueryLine, bed: BedLine) -> Boolean:
     return is_overlapping(
         (query.chrom_start, query.chrom_end), (bed.chrom_start, bed.chrom_end)
     )
+
 
 class Table:
     """Table containing bed-lines."""
@@ -64,4 +68,3 @@ class Table:
     def get_chrom(self, chrom: str) -> list[BedLine]:
         """Get all the lines that sits on chrom"""
         return self.tbl[chrom]
-        
