@@ -15,16 +15,15 @@ for a given chromosome, you can use the get_chrom() method:
 [BedLine(chrom='chr1', chrom_start=0, chrom_end=1, name='foo'), BedLine(chrom='chr1', chrom_start=10, chrom_end=11, name='baz')]
 """
 
+from collections import defaultdict
 from typing import NamedTuple
 from xmlrpc.client import Boolean
-from bed import BedLine
-from collections import defaultdict
 
-QueryLine = NamedTuple("QueryLine", [
-    ('chrom', str),
-    ('chrom_start', int),
-    ('chrom_end', int)
-])
+from bed import BedLine
+
+QueryLine = NamedTuple(
+    "QueryLine", [("chrom", str), ("chrom_start", int), ("chrom_end", int)]
+)
 
 
 def parse_query(line: str) -> QueryLine:
@@ -49,6 +48,7 @@ def is_value_in_range(x: int, interval: tuple[int, int]):
 
     """
     return x > interval[0] and x <= interval[1]
+
 
 def is_overlapping(x: tuple[int, int], y: tuple[int, int]) -> Boolean:
     """Check if 2 intervals overlap.

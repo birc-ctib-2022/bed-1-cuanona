@@ -1,19 +1,14 @@
 """Module for working with lines of BED data."""
 
-from typing import (
-    NamedTuple, TextIO
-)
+from typing import NamedTuple, TextIO
 
 # You haven't seen this yet, but I am creating a type,
 # BedLine, that we can create as
 # >>> line = BedLine('chr21', 20_100, 20_101, 'foobar')
 # and access both as a tuple, line[0], or by name, line.chrom.
-BedLine = NamedTuple("BedLine", [
-    ('chrom', str),
-    ('chrom_start', int),
-    ('chrom_end', int),
-    ('name', str)
-])
+BedLine = NamedTuple(
+    "BedLine", [("chrom", str), ("chrom_start", int), ("chrom_end", int), ("name", str)]
+)
 
 
 def parse_bed(line: str) -> BedLine:
@@ -30,7 +25,7 @@ def parse_bed(line: str) -> BedLine:
     bed_line = BedLine(chrom, int(start), int(end), name)
     return bed_line
 
-def print_line(line: BedLine, f: TextIO) -> None:
+
+def print_line(line: BedLine, file: TextIO) -> None:
     """Prints line to the stream f as a BED line."""
-    print(line.chrom, line.chrom_start,
-          line.chrom_end, line.name, file=f, sep='\t')
+    print(line.chrom, line.chrom_start, line.chrom_end, line.name, file=file, sep="\t")
