@@ -16,19 +16,19 @@ def test_is_overlapping_inside():
     """
     Given an interval B which is inside interval A, `is_overlapping` returns True.
     """
-    interval_A = (0, 10)
-    interval_B = (5, 6)
-    assert is_overlapping(interval_A, interval_B)
+    interval_a = (0, 10)
+    interval_b = (5, 6)
+    assert is_overlapping(interval_a, interval_b)
 
 
 def test_is_overlapping_upper():
     """
-    Given an interval_B which overlaps with the bottom
+    Given an interval B which overlaps with the bottom
     part of interval A, `is_overlapping` returns True.
     """
-    interval_A = (4, 10)
-    interval_B = (1, 5)
-    assert is_overlapping(interval_A, interval_B)
+    interval_a = (4, 10)
+    interval_b = (1, 5)
+    assert is_overlapping(interval_a, interval_b)
 
 
 def test_is_overlapping_bottom():
@@ -36,9 +36,9 @@ def test_is_overlapping_bottom():
     Given an interval B which overlaps with the upper part of
     interval A, `is_overlapping` returns True.
     """
-    interval_A = (4, 10)
-    interval_B = (9, 15)
-    assert is_overlapping(interval_A, interval_B)
+    interval_a = (4, 10)
+    interval_b = (9, 15)
+    assert is_overlapping(interval_a, interval_b)
 
 
 def test_is_not_overlapping():
@@ -46,9 +46,9 @@ def test_is_not_overlapping():
     Given two intervals, A and B, which don't overlap,
     `is_overlapping` returns False.
     """
-    interval_A = (389, 390)
-    interval_B = (409, 850)
-    assert not is_overlapping(interval_A, interval_B)
+    interval_a = (389, 390)
+    interval_b = (409, 850)
+    assert not is_overlapping(interval_a, interval_b)
 
 
 def test_is_not_overlapping_when_upper_bound():
@@ -56,9 +56,9 @@ def test_is_not_overlapping_when_upper_bound():
     Given two non-overlapping intervals, A and B, for which the lower bound
     of A is equal to the upper bound of B, `is_overlapping` returns False.
     """
-    interval_A = (520, 521)
-    interval_B = (418, 520)
-    assert not is_overlapping(interval_A, interval_B)
+    interval_a = (520, 521)
+    interval_b = (418, 520)
+    assert not is_overlapping(interval_a, interval_b)
 
 
 def test_is_overlapping_when_lower_bound():
@@ -66,13 +66,13 @@ def test_is_overlapping_when_lower_bound():
     Given two intervals, A and B, for which the lower bound of A is equal to
     the lower bound of B, `is_overlapping` returns True.
     """
-    interval_A = (520, 521)
-    interval_B = (520, 525)
-    assert is_overlapping(interval_A, interval_B)
+    interval_a = (520, 521)
+    interval_b = (520, 525)
+    assert is_overlapping(interval_a, interval_b)
 
 
 def test_is_overlapping_when_coincidence():
     """Given two equal intervals, A and B, `is_overlapping` returns True."""
-    interval_A = (520, 521)
-    interval_B = (520, 521)
-    assert is_overlapping(interval_A, interval_B)
+    interval_a = (520, 521)
+    interval_b = (520, 521)
+    assert is_overlapping(interval_a, interval_b)

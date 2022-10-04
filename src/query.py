@@ -47,7 +47,7 @@ def is_value_in_range(x: int, interval: tuple[int, int]):
     True
 
     """
-    return x > interval[0] and x <= interval[1]
+    return interval[0] < x <= interval[1]
 
 
 def is_overlapping(x: tuple[int, int], y: tuple[int, int]) -> Boolean:
