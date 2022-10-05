@@ -1,4 +1,6 @@
-"""Module for working with lines of BED data."""
+"""
+Module for working with lines of BED data.
+"""
 
 from typing import NamedTuple, TextIO
 
@@ -27,5 +29,7 @@ def parse_bed(line: str) -> BedLine:
 
 
 def print_line(line: BedLine, file: TextIO) -> None:
-    """Prints line to the stream f as a BED line."""
+    """
+    Prints line to the stream f as a BED line.
+    """
     print(line.chrom, line.chrom_start, line.chrom_end, line.name, file=file, sep="\t")
