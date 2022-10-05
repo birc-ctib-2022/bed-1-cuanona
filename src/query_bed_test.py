@@ -1,7 +1,7 @@
 """Tests for query_bed module"""
 
 from bed import BedLine
-from query import QueryLine,Table,  is_overlapping, parse_query
+from query import QueryLine, Table,  is_overlapping, parse_query
 from query_bed import find_query_overlaps, read_bed_lines_into_table
 
 def test_it_works_with_general_query_line():
@@ -75,7 +75,9 @@ def test_is_overlapping_when_lower_bound():
 
 
 def test_is_overlapping_when_coincidence():
-    """Given two equal intervals, A and B, `is_overlapping` returns True."""
+    """
+    Given two equal intervals, A and B, `is_overlapping` returns True.
+    """
     interval_a = (520, 521)
     interval_b = (520, 521)
     assert is_overlapping(interval_a, interval_b)
@@ -83,7 +85,7 @@ def test_is_overlapping_when_coincidence():
 def test_read_bed_lines_into_table():
     bed_lines = "chr7   1   5   foo\n chr7   7   8   bar".split('\n')
     result = [
-        BedLine(chrom='chr7', chrom_start=1, chrom_end=5, name='foo'), 
+        BedLine(chrom='chr7', chrom_start=1, chrom_end=5, name='foo'),
         BedLine(chrom='chr7', chrom_start=7, chrom_end=8, name='bar')
         ]
     assert read_bed_lines_into_table(bed_lines).get_chrom('chr7'), result
