@@ -14,7 +14,8 @@ BedLine = NamedTuple(
 
 
 def parse_bed(line: str) -> BedLine:
-    """Parse a single line from a BED file (with four columns).
+    """
+    Parse a single line from a BED file (with four columns).
 
     >>> parse_bed('chr1   20_100  20_101  foo')
     BedLine(chrom='chr1', chrom_start=20100, chrom_end=20101, name='foo')
