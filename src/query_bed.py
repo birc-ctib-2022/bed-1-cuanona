@@ -1,30 +1,43 @@
-"""Tool for cleaning up a BED file."""
+"""
+Tool for cleaning up a BED file.
+"""
 
 import argparse  # we use this module for option parsing. See main for details.
 import sys
-from typing import TextIO
+from typing import TextIO, Iterator
 
 from bed import BedLine, parse_bed, print_line
 from query import QueryLine, Table, is_query_overlapping_with_bed, parse_query
 
 
-def find_query_overlaps(table: Table, query: QueryLine) -> BedLine:
-    """A generator that yields overlapping lines from the table with the query"""
+def find_query_overlaps(table: Table, query: QueryLine) -> Iterator[BedLine]:
+    """
+    A generator that yields overlapping lines from the table with the query
+    """
     for bed in table.get_chrom(query.chrom):
         if is_query_overlapping_with_bed(query, bed):
             yield bed
 
 
-def read_bed_file_into_table(bed_file: TextIO):
-    """It reads a TextIO of bed seq"""
+def read_bed_lines_into_table(bed_lines: Iterator[str]):
+    """
+    It reads different bed lines from an iterator and put them into a table
+    """
     table = Table()
-    for bed_line in bed_file:
+    for bed_line in bed_lines:
         table.add_line(parse_bed(bed_line))
     return table
 
+def read_bed_file_into_table(bed_file: TextIO):
+    """
+    It reads a TextIO of bed seq
+    """
+    return read_bed_lines_into_table(bed_file)
 
 def main() -> None:
-    """Run the program."""
+    """
+    Run the program.
+    """
     # Setting up the option parsing using the argparse module
     argparser = argparse.ArgumentParser(description="Extract regions from a BED file")
     argparser.add_argument("bed", type=argparse.FileType("r"))
@@ -41,7 +54,7 @@ def main() -> None:
 
     # Parse options and put them in the table args
     args = argparser.parse_args()
-    # Record lines into table
+    # Record lines into a table
     table = read_bed_file_into_table(args.bed)
     # Find overlaps
     for query_line in args.query:
