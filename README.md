@@ -64,10 +64,27 @@ When you have implemented the tool, answer the questions below, commit it to Git
 
 ## Questions
 
-How does your method for extracting features work?
+**How does your method for extracting features work?**
 
-What is the complexity of the algorithm, as a function of the size of the two input files? When you answer this, you need to know that you can get the list of chromosomse from a `query.Table` in constant time, but it does, of course, take longer to run through all the lines in it.
+A general scheme is shown in the following figure. First, we read the user arguments (the file path of the bed file and the query file). Then, we read and record each of the bed lines in a table, indexed by chromosome. Finally, for each of the queries, we print the overlapping features in the output file. To do this we first parse the query, then we obtain the list of features of the chromosome in question and iterate through each of them, checking if they overlap with our query. 
 
-Did you, at any point, exploit that our features are on single nucleotides and not larger regions?
+![Figure 1: Scheme](docs/fig_1.png)
 
-If you did, what would it take to handle general regions?
+
+**What is the complexity of the algorithm, as a function of the size of the two input files? When you answer this, you need to know that you can get the list of chromosomes from a `query.Table` in constant time, but it does, of course, take longer to run through all the lines in it.**
+
+The total complexity of our implementation is $$O(m\cdot n)$$
+where $n$ is the number of features in the bed files and $m$ is the number of features in the query file. 
+
+To calculate this, we have taken into account the complexity of the different steps, as shown in the previous figure. Some steps, such as reading the file to the table have a complexity regardless of the scenario (we would have to read it even if there was no query, i.e. the best scenario). Also, other steps, such as getting the list of chromosome features or reading the input arguments run in constant time $O(0)$. To improve this implementation we would have to find a way to iterate through each of the bed lines only once.
+
+
+**Did you, at any point, exploit that our features are on single nucleotides and not larger regions? If you did, what would it take to handle general regions?**
+
+We have made a function that, we hope, handles the general case ;)  
+
+To know if two features overlap, we have to consider the following cases, shown in the figure. 
+
+![Figure 2: Cases](docs/fig_2.png)
+
+We generalize the previous cases in the following rule: *we consider that a query and a feature overlap if either the end of the query is in the range (including upper and lower bound) of the feature or vice versa*. To reach this conclusion, we used numerous tests for each case. 
