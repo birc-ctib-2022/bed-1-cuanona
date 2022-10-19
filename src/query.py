@@ -15,8 +15,49 @@ for a given chromosome, you can use the get_chrom() method:
 [BedLine(chrom='chr1', chrom_start=0, chrom_end=1, name='foo'), BedLine(chrom='chr1', chrom_start=10, chrom_end=11, name='baz')]
 """
 
-from bed import BedLine
 from collections import defaultdict
+from typing import NamedTuple
+from xmlrpc.client import Boolean
+
+from bed import BedLine
+
+QueryLine = NamedTuple(
+    "QueryLine", [("chrom", str), ("chrom_start", int), ("chrom_end", int)]
+)
+
+
+def parse_query(line: str) -> QueryLine:
+    """Parse a single line query (with three columns).
+
+    >>> parse_query('chr1   1  10')
+    QueryLine(chrom='chr1', chrom_start=1, chrom_end=10)
+
+    """
+    chrom, start, end = line.split()  # split on any white-space
+    query_line = QueryLine(chrom, int(start), int(end))
+    return query_line
+
+def is_overlapping(x: tuple[int, int], y: tuple[int, int]) -> Boolean:
+    """Check if 2 intervals overlap.
+
+    >>> is_overlapping((1, 10), (4, 15))
+    True
+    >>> is_overlapping((15, 17), (4, 5))
+    False
+
+    """
+    return max(x[0], y[0]) < min(x[1], y[1])
+
+
+def is_query_overlapping_with_bed(query: QueryLine, bed: BedLine) -> Boolean:
+    """Check if a a QueryLine overlaps with a BedLine
+    >>> is_query_overlapping_with_bed( QueryLine(chrom='chr1', chrom_start=1, chrom_end=10), BedLine(chrom='chr1', chrom_start=5, chrom_end=15, name='foo'))
+    True
+
+    """
+    return is_overlapping(
+        (query.chrom_start, query.chrom_end), (bed.chrom_start, bed.chrom_end)
+    )
 
 
 class Table:
