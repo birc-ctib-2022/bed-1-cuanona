@@ -76,7 +76,7 @@ A general scheme is shown in the following figure. First, we read the user argum
 The total complexity of our implementation is $$O(m\cdot n)$$
 where $n$ is the number of features in the bed files and $m$ is the number of features in the query file. 
 
-To calculate this, we have taken into account the complexity of the different steps, as shown in the previous figure. Some steps, such as reading the file to the table have a complexity regardless of the scenario (we would have to read it even if there was no query, i.e. the best scenario). Also, other steps, such as getting the list of chromosome features or reading the input arguments run in constant time $O(0)$. To improve this implementation we would have to find a way to iterate through each of the bed lines only once.
+To calculate this, we have taken into account the complexity of the different steps, as shown in the previous figure. Some steps, such as reading the file to the table have a complexity regardless of the scenario (we would have to read it even if there was no query, i.e. the best scenario). Also, other steps, such as getting the list of chromosome features or reading the input arguments run in constant time $O(1)$. To improve this implementation we would have to find a way to iterate through each of the bed lines only once.
 
 
 **Did you, at any point, exploit that our features are on single nucleotides and not larger regions? If you did, what would it take to handle general regions?**
